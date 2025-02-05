@@ -5,13 +5,15 @@ import {CreateItemForm} from '../CreateItemForm.tsx'
 import {
   changeTaskStatusAC,
   changeTaskTitleAC,
-  createTaskAC, deleteTaskAC,
+  createTaskAC,
+  deleteTaskAC,
   tasksReducer
 } from '../model/tasks-reducer.ts'
 import {
   changeTodolistFilterAC,
-  changeTodolistTitleAC, createTodolistAC, deleteTodolistAC,
-  todolistsReducer
+  changeTodolistTitleAC,
+  createTodolistAC,
+  deleteTodolistAC
 } from '../model/todolists-reducer.ts'
 import {TodolistItem} from '../TodolistItem.tsx'
 import AppBar from '@mui/material/AppBar'
@@ -25,7 +27,7 @@ import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
 import {containerSx} from '../TodolistItem.styles.ts'
 import {NavButton} from '../NavButton.ts'
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "./store.ts";
 
 export type Todolist = {
@@ -51,7 +53,7 @@ export const App = () => {
   const [tasks, dispatchToTasks] = useReducer(tasksReducer, {})
  // const [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [])
  //  const [tasks, dispatchToTasks] = useReducer(tasksReducer, {})
-
+  const dispatch = useDispatch()
   const [themeMode, setThemeMode] = useState<ThemeMode>('light')
 
   const theme = createTheme({
@@ -78,13 +80,12 @@ export const App = () => {
   }
 
   const deleteTodolist = (todolistId: string) => {
-    const action = deleteTodolistAC(todolistId)
-    dispatchToTodolists(action)
-    dispatchToTasks(action)
+    dispatch( deleteTodolistAC({ id: todolistId}))
+
   }
 
   const changeTodolistTitle = (todolistId: string, title: string) => {
-    dispatchToTodolists(changeTodolistTitleAC({id: todolistId, title}))
+    dispatch(changeTodolistTitleAC({id: todolistId, title}))
   }
 
   const deleteTask = (todolistId: string, taskId: string) => {
