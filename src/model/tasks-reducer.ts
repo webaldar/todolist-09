@@ -4,6 +4,18 @@ import {createAction, createReducer, nanoid} from "@reduxjs/toolkit";
 
 const initialState: TasksState = {}
 
+export const deleteTaskAC =
+    createAction<{ todolistId: string, taskId: string }>('tasks/deleteTask')
+
+export const createTaskAC =
+    createAction<{ todolistId: string, title: string }>('tasks/createTask')
+
+export const changeTaskStatusAC = createAction<{
+    todolistId: string,taskId: string,isDone: boolean}>('tasks/changeTaskStatus')
+
+export const changeTaskTitleAC =
+    createAction<{ todolistId: string, taskId: string, title: string }>('tasks/changeTaskTitle')
+
 export const tasksReducer = createReducer(initialState, builder => {
     builder
         .addCase(deleteTodolistAC, (state, action) => {
@@ -13,8 +25,12 @@ export const tasksReducer = createReducer(initialState, builder => {
             state[action.payload.id] = []
         })
         .addCase(deleteTaskAC, (state, action) => {
-            state[action.payload.todolistId] =
-                state[action.payload.todolistId].filter(task => task.id !== action.payload.taskId)
+            const tasks = state[action.payload.todolistId]
+            const index = tasks.findIndex((task) => task.id === action.payload.taskId)
+            if(index !== -1) {
+                tasks.splice(index, 1)
+            }
+
         })
         .addCase(createTaskAC, (state, action) => {
             const newTask = {title: action.payload.title, isDone: false, id: nanoid()}
@@ -37,14 +53,7 @@ export const tasksReducer = createReducer(initialState, builder => {
 
 })
 
-export const deleteTaskAC =
-    createAction<{ todolistId: string, taskId: string }>('tasks/deleteTask')
-export const createTaskAC = createAction<{ todolistId: string, title: string }>('tasks/createTask')
-export const changeTaskStatusAC = createAction<{
-    todolistId: string,taskId: string,isDone: boolean}>('tasks/changeTaskStatus')
 
-export const changeTaskTitleAC =
-    createAction<{ todolistId: string, taskId: string, title: string }>('tasks/changeTaskTitle')
 
 // export type DeleteTaskAction = ReturnType<typeof deleteTaskAC>
 // export type CreateTaskAction = ReturnType<typeof createTaskAC>

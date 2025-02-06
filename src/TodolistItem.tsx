@@ -63,7 +63,8 @@ export const TodolistItem = (props: Props) => {
           </IconButton>
         </div>
         <CreateItemForm onCreateItem={createTaskHandler}/>
-        {tasks.length === 0 ? (
+        {
+          tasks.length === 0 ? (
             <p>Тасок нет</p>
         ) : (
             <List>
