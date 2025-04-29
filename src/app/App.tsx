@@ -1,19 +1,22 @@
 import './App.css'
 import {createTheme, ThemeProvider} from '@mui/material/styles'
 import {useReducer, useState} from 'react'
-import {CreateItemForm} from './CreateItemForm'
+import {CreateItemForm} from '../CreateItemForm.tsx'
 import {
   changeTaskStatusAC,
   changeTaskTitleAC,
-  createTaskAC, deleteTaskAC,
+  createTaskAC,
+  deleteTaskAC,
   tasksReducer
-} from './model/tasks-reducer'
+} from '../model/tasks-reducer.ts'
 import {
   changeTodolistFilterAC,
-  changeTodolistTitleAC, createTodolistAC, deleteTodolistAC,
+  changeTodolistTitleAC,
+  createTodolistAC,
+  deleteTodolistAC,
   todolistsReducer
-} from './model/todolists-reducer'
-import {TodolistItem} from './TodolistItem'
+} from '../model/todolists-reducer.ts'
+import {TodolistItem} from '../TodolistItem.tsx'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
@@ -23,18 +26,18 @@ import Grid from '@mui/material/Grid2'
 import Paper from '@mui/material/Paper'
 import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
-import {containerSx} from './TodolistItem.styles'
-import {NavButton} from './NavButton'
+import {containerSx} from '../TodolistItem.styles.ts'
+import {NavButton} from '../NavButton.ts'
 
 export type Todolist = {
-  id: string
-  title: string
-  filter: FilterValues
+    id: string
+    title: string
+    filter: FilterValues
 }
 
 export type Task = {
-  id: string
-  title: string
+    id: string
+    title: string
   isDone: boolean
 }
 
