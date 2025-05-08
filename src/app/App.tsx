@@ -21,8 +21,8 @@ import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
 import {containerSx} from '../TodolistItem.styles.ts'
 import {NavButton} from '../NavButton.ts'
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "./store.ts";
+import {useAppDispatch} from "../common/hooks/useAppDispatch.ts";
+import {useAppSelector} from "../common/hooks/useAppSelector.ts";
 
 export type Todolist = {
   id: string
@@ -43,9 +43,12 @@ export type TasksState = Record<string, Task[]>
 type ThemeMode = 'dark' | 'light'
 
 export const App = () => {
-  const todolists = useSelector<RootState, Todolist[]>(state => state.todolists)
-  const tasks = useSelector<RootState, TasksState>(state => state.tasks)
-  const dispatch = useDispatch()
+
+  const todolists = useAppSelector(state => state.todolists)
+  const tasks = useAppSelector(state => state.tasks)
+
+  const dispatch = useAppDispatch()
+
   // const [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [])
   // const [tasks, dispatchToTasks] = useReducer(tasksReducer, {})
 
@@ -69,13 +72,11 @@ export const App = () => {
   }
 
   const createTodolist = (title: string) => {
-    const action = createTodolistAC(title)
-    dispatch(action)
+    dispatch(createTodolistAC(title))
   }
 
   const deleteTodolist = (todolistId: string) => {
-    const action = deleteTodolistAC(todolistId)
-    dispatch(action)
+    dispatch(deleteTodolistAC(todolistId))
   }
 
   const changeTodolistTitle = (todolistId: string, title: string) => {
@@ -101,7 +102,7 @@ export const App = () => {
   return (
       <ThemeProvider theme={theme}>
         <div className={'app'}>
-          <CssBaseline/>
+          <CssBaseline />
           <AppBar position="static" sx={{mb: '30px'}}>
             <Toolbar>
               <Container maxWidth={'lg'} sx={containerSx}>
@@ -112,7 +113,7 @@ export const App = () => {
                   <NavButton>Sign in</NavButton>
                   <NavButton>Sign up</NavButton>
                   <NavButton background={theme.palette.primary.dark}>Faq</NavButton>
-                  <Switch color={'default'} onChange={changeMode}/>
+                  <Switch color={'default'} onChange={changeMode} />
                 </div>
               </Container>
             </Toolbar>
