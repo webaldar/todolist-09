@@ -23,6 +23,8 @@ import {containerSx} from '../TodolistItem.styles.ts'
 import {NavButton} from '../NavButton.ts'
 import {useAppSelector} from "../common/hooks/useAppSelector.ts";
 import {useAppDispatch} from "../common/hooks/useAppDispatch.ts";
+import {selectTodolists} from "../model/todolists-selectors.ts";
+import {selectTasks} from "../model/tasks-selector.ts";
 
 export type Todolist = {
   id: string
@@ -44,8 +46,8 @@ type ThemeMode = 'dark' | 'light'
 
 export const App = () => {
 
-  const todolists = useAppSelector(state => state.todolists)
-  const tasks = useAppSelector(state => state.tasks)
+  const todolists = useAppSelector(selectTodolists)
+  const tasks = useAppSelector(selectTasks)
 
   const dispatch = useAppDispatch()
 
@@ -78,7 +80,7 @@ export const App = () => {
 
   const deleteTodolist = (todolistId: string) => {
 
-    dispatch(deleteTodolistAC(todolistId))
+    dispatch(deleteTodolistAC({id: todolistId}))
 
   }
 
